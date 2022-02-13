@@ -5,8 +5,7 @@
   "main": "",
   "dependencies": {
     "mysql": "^2.18.1",
-    "node-fetch": "^3.1.0",
-    "node-php-password": "^0.1.2"
+    "node-fetch": "^3.1.0"
   },
   "keywords": [
     "altv"
