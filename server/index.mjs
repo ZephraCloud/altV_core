@@ -1,7 +1,6 @@
 import * as alt from "alt-server";
-import * as chat from "chat";
 
-import * as config from "./../config.json";
+import config from "./../config.json";
 import fetch from "node-fetch";
 import * as log from "./log.mjs";
 import * as cmd from "./commands.mjs";
