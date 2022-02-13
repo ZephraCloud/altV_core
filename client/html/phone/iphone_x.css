@@ -1,0 +1,151 @@
+.phone {
+    position: relative;
+    height: 663px;
+    width: 327px;
+    box-sizing: border-box;
+    transform: scale(1);
+}
+
+.phone .phone-frame {
+    position: relative;
+    background: rgb(10, 10, 10);
+    border-radius: 44px;
+    box-shadow: inset 0 0 2px 2px #c8cacb, inset 0 0 0 7px #e2e3e4;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.phone .phone-content {
+    position: relative;
+    border-radius: 23px;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+
+.phone .phone-stripe::after,
+.phone .phone-stripe::before {
+    border: solid rgba(51, 51, 51, 0.25);
+    border-width: 0 7px;
+    content: "";
+    height: 7px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 9;
+}
+
+.phone .phone-stripe::after {
+    top: 85px;
+}
+
+.phone .phone-stripe::before {
+    bottom: 85px;
+}
+
+.phone .phone-header {
+    background: rgb(10, 10, 10);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    height: 30px;
+    left: calc(50% + 11px);
+    margin-left: -102px;
+    position: absolute;
+    top: 15px;
+    width: 180px;
+}
+
+.phone .phone-header::after,
+.phone .phone-header::before {
+    content: "";
+    height: 10px;
+    position: absolute;
+    top: 0;
+    width: 10px;
+}
+
+.phone .phone-header::after {
+    background: radial-gradient(
+        circle at bottom left,
+        transparent 0,
+        transparent 75%,
+        rgb(10, 10, 10) 75%,
+        rgb(10, 10, 10) 100%
+    );
+    left: -10px;
+}
+
+.phone .phone-header::before {
+    background: radial-gradient(
+        circle at bottom right,
+        transparent 0,
+        transparent 75%,
+        rgb(10, 10, 10) 75%,
+        rgb(10, 10, 10) 100%
+    );
+    right: -10px;
+}
+
+.phone .phone-sensors::after,
+.phone .phone-sensors::before {
+    content: "";
+    position: absolute;
+}
+
+.phone .phone-sensors::after {
+    background: rgb(26, 26, 26);
+    border-radius: 3px;
+    height: 6px;
+    left: 50%;
+    margin-left: -30px;
+    top: 25px;
+    width: 50px;
+}
+
+.phone .phone-sensors::before {
+    background: rgb(26, 26, 26);
+    border-radius: 50%;
+    height: 14px;
+    left: 50%;
+    margin-left: 45px;
+    top: 20px;
+    width: 14px;
+}
+
+.phone .phone-btns {
+    background: #c8cacb;
+    height: 32px;
+    left: -3px;
+    position: absolute;
+    top: 115px;
+    width: 3px;
+}
+
+.phone .phone-btns::after,
+.phone .phone-btns::before {
+    background: #c8cacb;
+    content: "";
+    height: 62px;
+    left: 0;
+    position: absolute;
+    width: 3px;
+}
+
+.phone .phone-btns::after {
+    top: 60px;
+}
+
+.phone .phone-btns::before {
+    top: 140px;
+}
+
+.phone .phone-power {
+    background: #c8cacb;
+    height: 100px;
+    right: -3px;
+    position: absolute;
+    top: 200px;
+    width: 3px;
+}
