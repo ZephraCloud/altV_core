@@ -66,7 +66,7 @@ export function remove(connection) {
 function destroyConnection(connection) {
     if (!memCons[connection] || memCons[connection]?.length === 0) return;
 
-    log.log(`SQL (${connection}) connection destroyed`, "CORE,SQL");
+    log.warn(`SQL (${connection}) connection destroyed`, "CORE,SQL");
 
     memCons[connection].connection.destroy();
 
@@ -82,7 +82,7 @@ function handleDisconnect(connection) {
         if (!error.fatal) return;
         if (error.code !== "PROTOCOL_CONNECTION_LOST") throw error;
 
-        log.log(`SQL (${k}) lost connection. Reconnecting...`, "CORE,SQL");
+        log.warn(`SQL (${k}) lost connection. Reconnecting...`, "CORE,SQL");
 
         connection = mysql.createConnection(v);
 

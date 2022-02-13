@@ -8,7 +8,7 @@ import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
 
-if (!config) log.log("Couldn't load config file.");
+if (!config) log.error("Couldn't load config file.");
 
 sql.create({
     altv: {
@@ -36,7 +36,7 @@ alt.on("playerConnect", (player) => {
 
 alt.onClient("core:server:checkLogin", async (player, email, password) => {
     if (!email || !password)
-        return log.log("Login check failed. No email or password provided.");
+        return log.warn("Login check failed. No email or password provided.");
 
     await fetch("https://api.zephra.cloud/altv/login", {
         method: "POST",

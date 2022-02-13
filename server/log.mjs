@@ -5,11 +5,11 @@ export function log(msg, sender) {
 }
 
 export function error(msg, sender) {
-    alt.log(`${getSender(sender)}`, msg);
+    alt.logError(`${getSender(sender)}`, msg);
 }
 
 export function warn(msg, sender) {
-    alt.log(`${getSender(sender)}`, msg);
+    alt.logWarning(`${getSender(sender)}`, msg);
 }
 
 function getSender(sender) {
