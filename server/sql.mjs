@@ -4,6 +4,10 @@ import * as log from "./log.mjs";
 
 const memCons = {};
 
+/**
+ * Creates a new SQL connection.
+ * @param {Object} connections
+ */
 export function create(connections) {
     for (const [k, v] of Object.entries(connections)) {
         log.log(`SQL (${k}) successfully connected`, "CORE,SQL");
@@ -57,6 +61,10 @@ export function create(connections) {
     }
 }
 
+/**
+ * Destroys a (or every) SQL connection.
+ * @param {string} connection
+ */
 export function remove(connection) {
     if (connection == "everything") {
         for (const [k, v] of Object.entries(memCons)) destroyConnection(k);
