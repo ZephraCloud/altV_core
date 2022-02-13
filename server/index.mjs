@@ -6,6 +6,7 @@ import fetch from "node-fetch";
 import * as log from "./log.mjs";
 import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
+import * as autoStart from "./autostart.mjs";
 
 if (!config) log.log("Couldn't load config file.");
 
@@ -85,9 +86,8 @@ alt.on("playerDeath", (player, killer, weaponHash) => {
     player.spawn(player.pos.x, player.pos.y, player.pos.z, 0);
 });
 
-alt.on("resourceStop", () => {
-    chat.unregisterCmd("revive");
-    chat.unregisterCmd("logout");
+autoStart.startAll();
 
+alt.on("resourceStop", () => {
     sql.remove("everything");
 });
