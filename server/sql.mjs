@@ -71,6 +71,10 @@ export function remove(connection) {
     } else destroyConnection(connection);
 }
 
+/**
+ * Destroys a SQL connection.
+ * @param {string} connection
+ */
 function destroyConnection(connection) {
     if (!memCons[connection] || memCons[connection]?.length === 0) return;
 
@@ -85,6 +89,10 @@ function destroyConnection(connection) {
     delete memCons[connection];
 }
 
+/**
+ * Handles a SQL connection disconnection.
+ * @param {Object} connection
+ */
 function handleDisconnect(connection) {
     connection.on("error", function (error) {
         if (!error.fatal) return;
