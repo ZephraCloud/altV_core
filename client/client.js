@@ -130,7 +130,7 @@ alt.on("playerEnteringVehicle", (player, vehicle, seat) => {
         player.setMeta("prop", {
             component: 0,
             drawable: player.getProp(0).drawable,
-            texture: player.getProp(0).texture,
+            texture: player.getProp(0).texture
         });
     }
 });
