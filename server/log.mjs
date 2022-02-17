@@ -1,15 +1,15 @@
 import * as alt from "alt-server";
 
 export function log(msg, sender) {
-    alt.log(`${getSender(sender)}`, msg);
+    alt.log(getSender(sender), msg);
 }
 
 export function error(msg, sender) {
-    alt.logError(`${getSender(sender)}`, msg);
+    alt.logError(getSender(sender), msg);
 }
 
 export function warn(msg, sender) {
-    alt.logWarning(`${getSender(sender)}`, msg);
+    alt.logWarning(getSender(sender), msg);
 }
 
 function getSender(sender) {
