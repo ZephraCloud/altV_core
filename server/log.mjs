@@ -6,7 +6,7 @@ import * as alt from "alt-server";
  * @param {string} sender
  */
 export function log(msg, sender) {
-    alt.log(getSender(sender), msg);
+    alt.log(convertSender(sender), msg);
 }
 
 /**
@@ -15,7 +15,7 @@ export function log(msg, sender) {
  * @param {string} sender
  */
 export function error(msg, sender) {
-    alt.logError(getSender(sender), msg);
+    alt.logError(convertSender(sender), msg);
 }
 
 /**
@@ -24,10 +24,16 @@ export function error(msg, sender) {
  * @param {string} sender
  */
 export function warn(msg, sender) {
-    alt.logWarning(getSender(sender), msg);
+    alt.logWarning(convertSender(sender), msg);
 }
 
-function getSender(sender) {
+/**
+ * Converts the sender parameter
+ * @param {string} sender
+ * @returns {string}
+ * @example getSender("zephra,core") => "[ZEPHRA][CORE]"
+ */
+function convertSender(sender) {
     if (!sender) return "[CORE]";
 
     if (sender.startsWith("[") && sender.endsWith("]")) return sender;
@@ -37,7 +43,7 @@ function getSender(sender) {
         for (const s of sender.split(",")) {
             if (!s) continue;
 
-            Return += `[${s.trim()}]`;
+            Return += `[${s.trim().toUpperCase()}]`;
         }
 
         return Return.replace("undefined", "");
