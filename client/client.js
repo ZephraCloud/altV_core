@@ -69,27 +69,16 @@ alt.onServer("core:client:teleportToWaypoint", () => {
     if (!native.doesBlipExist(waypoint)) return;
 
     const player = alt.Player.local.scriptID;
-    const WaypointPosition = native.getBlipInfoIdCoord(waypoint);
+    const pos = native.getBlipInfoIdCoord(waypoint);
 
-    native.setFocusPosAndVel(
-        WaypointPosition.x,
-        WaypointPosition.y,
-        WaypointPosition.z,
-        0,
-        0,
-        0
-    );
-    native.requestCollisionAtCoord(
-        WaypointPosition.x,
-        WaypointPosition.y,
-        WaypointPosition.z
-    );
+    native.setFocusPosAndVel(pos.x, pos.y, pos.z, 0, 0, 0);
+    native.requestCollisionAtCoord(pos.x, pos.y, pos.z);
 
-    let z = Number(WaypointPosition.z),
+    let z = Number(pos.z),
         IsGround = native.getGroundZFor3dCoord(
-            WaypointPosition.x,
-            WaypointPosition.y,
-            WaypointPosition.z,
+            pos.x,
+            pos.y,
+            pos.z,
             undefined,
             undefined
         )[0];
@@ -97,8 +86,8 @@ alt.onServer("core:client:teleportToWaypoint", () => {
     setTimeout(() => {
         while (!IsGround) {
             IsGround = native.getGroundZFor3dCoord(
-                WaypointPosition.x,
-                WaypointPosition.y,
+                pos.x,
+                pos.y,
                 z,
                 undefined,
                 undefined
@@ -113,8 +102,8 @@ alt.onServer("core:client:teleportToWaypoint", () => {
 
         native.setFocusEntity(player);
         alt.emitServer(
-            "TeleportToWaypoint",
-            new alt.Vector3(WaypointPosition.x, WaypointPosition.y, z)
+            "core:server:teleportToWaypoint",
+            new alt.Vector3(pos.x, pos.y, z)
         );
     }, 1400);
 });
