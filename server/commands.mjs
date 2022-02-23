@@ -41,8 +41,42 @@ export function unregister(cmd, register = "zephra_core") {
     commands[register].splice(commands[register].indexOf(cmd), 1);
 }
 
+/**
+ * Unregisters all commands.
+ * @param {string} cmd
+ * @param {string} register
+ */
+export function unregisterAll(register = "zephra_core") {
+    if (!commands[register]) return;
+
+    for (const cmd of commands[register]) {
+        log.log(`Unregistered command: ${cmd} (${register})`);
+
+        chat.unregisterCmd(cmd);
+    }
+
+    delete commands[register];
+}
+
+/**
+ * Sends a message to a player
+ * @param {alt.Player} player
+ * @param {string} message
+ */
+export function sendChat(player, message) {
+    chat.send(player, message);
+}
+
+/**
+ * Sends a message to all players
+ * @param {string} message
+ */
+export function broadcastChat(message) {
+    chat.broadcast(message);
+}
+
 alt.on("anyResourceStop", (name) => {
     if (!commands[name]) return;
 
-    if (commands[name]) for (const cmd of commands[name]) unregister(cmd, name);
+    if (commands[name]) unregisterAll(name);
 });
