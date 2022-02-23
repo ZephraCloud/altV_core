@@ -29,6 +29,30 @@ export function setup(player, userId) {
                                 ? "mp_f_freemode_01"
                                 : "mp_m_freemode_01";
 
+                        for (let weapon of character.weapons)
+                            player.giveWeapon(weapon, 500, true);
+
+                        const names = JSON.parse(character.name);
+
+                        player.setSyncedMeta("firstname", names.firstname);
+                        player.setSyncedMeta("middlename", names.middlename);
+                        player.setSyncedMeta("surname", names.surname);
+
+                        const permissions = JSON.parse(character.permissions);
+
+                        player.setSyncedMeta(
+                            "admin",
+                            permissions.admin ?? false
+                        );
+
+                        player.setSyncedMeta("userId", character.userId);
+
+                        if (permissions.admin)
+                            log.warn(
+                                `${player.name} logged in with admin permissions`,
+                                "CORE,CHARACTER"
+                            );
+
                         alt.emitClient(
                             player,
                             "chore:client:character:load",
@@ -49,6 +73,33 @@ export function setup(player, userId) {
             }
         }
     );
+}
+
+export function save(player, logout = false) {
+    if (!player) return;
+
+    alt.emit(
+        "sql:altv:query",
+        `UPDATE characters SET weapons = '${JSON.stringify(
+            player.weapons
+        )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+    );
+
+    if (logout) {
+        player.deleteMeta("firstname");
+        player.deleteMeta("middlename");
+        player.deleteMeta("surname");
+
+        player.removeAllWeapons();
+
+        alt.emitClient(player, "core:client:login");
+    }
+}
+
+export function logout(player) {
+    if (!player) return;
+
+    save(player, true);
 }
 
 /**
