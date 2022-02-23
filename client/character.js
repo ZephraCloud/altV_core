@@ -8,12 +8,16 @@ const model = {
     male: alt.hash("mp_m_freemode_01")
 };
 
-native.requestModel(model.female);
-native.requestModel(model.male);
+alt.on("connectionComplete", () => {
+    alt.loadModel(model.female);
+    alt.loadModel(model.male);
+});
 
 alt.onServer("chore:client:character:load", (character) => {
     if (!character)
         return log.error("Character data not provided", "CORE,CHARACTER");
+
+    log.log("Received character data", "CORE,CHARACTER");
 
     const scriptID = alt.Player.local.scriptID,
         skin = JSON.parse(character.skin);
@@ -35,6 +39,26 @@ alt.onServer("chore:client:character:load", (character) => {
         false
     );
 
+    /* Hair */
+    native.addPedDecorationFromHashes(
+        alt.Player.local.scriptID,
+        native.getHashKey(skin.hairOverlay.collection),
+        native.getHashKey(skin.hairOverlay.overlay)
+    );
+    native.setPedComponentVariation(
+        alt.Player.local.scriptID,
+        2,
+        skin.hair,
+        0,
+        0
+    );
+    native.setPedHairColor(
+        alt.Player.local.scriptID,
+        skin.hairColor1,
+        skin.hairColor2
+    );
+
+    /* Facial Hair */
     native.setPedHeadOverlay(
         scriptID,
         1,
@@ -49,6 +73,7 @@ alt.onServer("chore:client:character:load", (character) => {
         skin.facialHairColor1
     );
 
+    /* Eyebrows */
     native.setPedHeadOverlay(scriptID, 2, skin.eyebrows, 1);
     native.setPedHeadOverlayColor(
         scriptID,
@@ -58,6 +83,7 @@ alt.onServer("chore:client:character:load", (character) => {
         skin.eyebrowsColor1
     );
 
+    /* Eyes */
     native.setPedEyeColor(scriptID, skin.eyes);
 });
 

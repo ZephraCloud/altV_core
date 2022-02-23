@@ -1,6 +1,8 @@
 import * as alt from "alt-client";
 import * as native from "natives";
 
+import * as character from "./character.js";
+
 const ignoredHats = [1, 27, 32, 33];
 
 let webview = {},
