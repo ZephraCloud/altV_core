@@ -16,3 +16,6 @@
     }
 }
 ```
+
+## Credits
+* [Stuyk](https://github.com/Stuyk) for the great documentation
