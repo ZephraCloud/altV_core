@@ -6,6 +6,7 @@ import * as log from "./log.mjs";
 import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
+import * as character from "./character.mjs";
 
 if (!config) log.error("Couldn't load config file.");
 
@@ -51,6 +52,7 @@ alt.onClient("core:server:checkLogin", async (player, email, password) => {
             log.log(`${email} logged in.`);
 
             if (player.valid) {
+                character.setup(player, data.userId);
                 alt.emitClient(player, "core:client:loginStatus", true);
             }
         } else {
