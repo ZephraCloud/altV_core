@@ -28,8 +28,12 @@ export function create(connections) {
         alt.on(`sql:${k}:query`, function (query, callback) {
             if (!query) return;
 
-            v.connection.query(query, function (err, results) {
-                if (err) return log.error(`SQL (${k}) query error`, "CORE,SQL");
+            memCons[k].connection.query(query, function (err, results) {
+                if (err)
+                    return log.error(
+                        `SQL (${k}) query error: ${err}`,
+                        "CORE,SQL"
+                    );
 
                 if (callback) callback(results);
             });
