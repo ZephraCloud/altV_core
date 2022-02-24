@@ -149,3 +149,18 @@
     top: 200px;
     width: 3px;
 }
+
+.navbar {
+    width: calc(100% - 30px);
+    height: 100px;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.app {
+}
+
+iframe {
+    display: none;
+}
