@@ -145,20 +145,10 @@ alt.on("playerEnteredVehicle", (player, vehicle, seat) => {
 alt.onServer("core:client:notification", notification);
 alt.onServer("core:client:advancedNotification", advancedNotification);
 
-export function notification(imageName, headerMsg, detailsMsg, message) {
+export function notification(message) {
     native.beginTextCommandThefeedPost("STRING");
     native.addTextComponentSubstringPlayerName(message);
-    native.endTextCommandThefeedPostMessagetextTu(
-        imageName.toUpperCase(),
-        imageName.toUpperCase(),
-        false,
-        4,
-        headerMsg,
-        detailsMsg,
-        1.0,
-        ""
-    );
-    native.endTextCommandThefeedPostTicker(false, false);
+    native.endTextCommandThefeedPostTicker(false, true);
 }
 
 export function advancedNotification(
@@ -185,6 +175,8 @@ export function advancedNotification(
 function openPhone() {
     console.log("Opening phone");
 
+    phoneState = true;
+
     webview.phone = new alt.WebView(
         "http://resource/client/html/phone/index.html"
     );
@@ -201,10 +193,32 @@ function openPhone() {
 function closePhone() {
     console.log("Closing phone");
 
+    phoneState = false;
+
     webview.phone.unfocus();
     webview.phone.destroy();
     alt.showCursor(false);
     alt.toggleGameControls(true);
 }
+
+alt.everyTick(() => {
+    if (phoneState) {
+        native.disableControlAction(0, 24, true); // Attack
+        native.disableControlAction(0, 257, true); // Attack2
+        native.disableControlAction(0, 69, true); // Vehicle Attack
+        native.disableControlAction(0, 92, true); // Passenger Attack
+        native.disableControlAction(0, 25, true); // Aim
+        native.disableControlAction(0, 45, true); // Reload
+        native.disableControlAction(0, 144, true); // Parachute deploy
+    } else {
+        native.enableControlAction(0, 24, true); // Attack
+        native.enableControlAction(0, 257, true); // Attack2
+        native.enableControlAction(0, 69, true); // Vehicle Attack
+        native.enableControlAction(0, 92, true); // Passenger Attack
+        native.enableControlAction(0, 25, true); // Aim
+        native.enableControlAction(0, 45, true); // Reload
+        native.enableControlAction(0, 144, true); // Parachute deploy
+    }
+});
 
 alt.setWeatherSyncActive(true);
