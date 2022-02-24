@@ -46,16 +46,26 @@ alt.onClient("core:server:checkLogin", async (player, email, password) => {
             "Content-Type": "application/json"
         }
     }).then(async (response) => {
-        const data = await response.json();
+        let data = await response.text();
 
-        if (data.success) {
-            log.log(`${email} logged in.`);
+        try {
+            JSON.parse(data);
 
-            if (player.valid) {
-                character.setup(player, data.userId);
-                alt.emitClient(player, "core:client:loginStatus", true);
+            data = JSON.parse(data);
+
+            if (data.success) {
+                log.log(`${email} logged in.`);
+
+                if (player.valid) {
+                    character.setup(player, data.userId);
+                    alt.emitClient(player, "core:client:loginStatus", true);
+                }
+            } else {
+                log.log(`Login check failed. ${email}`);
+
+                alt.emitClient(player, "core:client:loginStatus", false);
             }
-        } else {
+        } catch (e) {
             log.log(`Login check failed. ${email}`);
 
             alt.emitClient(player, "core:client:loginStatus", false);
@@ -178,6 +188,26 @@ alt.on("playerDeath", (player, killer, weaponHash) => {
 });
 
 autoStart.startAll();
+alt.on("playerConnect", (player) => {
+    player.model = "mp_m_freemode_01";
+
+    alt.emitClient(player, "core:client:requestIpls");
+
+    cmd.broadcastChat(
+        `{1cacd4}${player.name} {00ff00}joined {ffffff}(${alt.Player.all.length} players online)`
+    );
+});
+
+alt.on("playerDisconnect", (player, reason) => {
+    character.save(player);
+
+    cmd.broadcastChat(
+        `{1cacd4}${player.name} {ff0000}left {ffffff}(${
+            alt.Player.all.length - 1
+        } players online)`
+    );
+});
+
 
 alt.on("resourceStop", () => {
     sql.remove("everything");
