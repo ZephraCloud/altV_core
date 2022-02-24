@@ -70,6 +70,19 @@ export function setup(player, userId) {
                             "core:client:notification",
                             `You are now playing as ${names.firstname} ${names.surname}`
                         );
+
+                        if (character.position) {
+                            const position = JSON.parse(character.position);
+
+                            player.spawn(position.x, position.y, position.z);
+                        }
+
+                        const healthData = JSON.parse(character.health);
+
+                        player.health = healthData.health;
+                        player.armour = healthData.armour;
+
+                        player.setSyncedMeta("bloodType", healthData.bloodType);
                     }
                 );
             } else {
@@ -82,7 +95,7 @@ export function setup(player, userId) {
                     "sql:altv:query",
                     `INSERT INTO characters (userId, name, sex, dob, health, skin) VALUES (${userId}, '${await generateNames(
                         "male"
-                    )}', '${generateDOB()}', "male",  '${healthData}','${generateSkin(
+                    )}', "male", '${generateDOB()}', '${healthData}','${generateSkin(
                         "male"
                     )}')`,
                     () => {
@@ -99,9 +112,26 @@ export function save(player, logout = false) {
 
     alt.emit(
         "sql:altv:query",
-        `UPDATE characters SET weapons = '${JSON.stringify(
-            player.weapons
-        )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            const character = result[0],
+                health = JSON.stringify({
+                    health: player.health,
+                    armour: player.armour,
+                    bloodType: JSON.parse(character.health).bloodType
+                });
+
+            alt.emit(
+                "sql:altv:query",
+                `UPDATE characters SET weapons = '${JSON.stringify(
+                    player.weapons
+                )}', health = '${health}', position = '${JSON.stringify(
+                    player.pos
+                )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+            );
+        }
     );
 
     if (logout) {
