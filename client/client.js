@@ -2,6 +2,7 @@ import * as alt from "alt-client";
 import * as native from "natives";
 
 import * as character from "./character.js";
+import * as fuel from "./fuel.js";
 
 const ignoredHats = [1, 27, 32, 33];
 
@@ -23,9 +24,6 @@ alt.onServer("core:client:login", () => {
 });
 
 alt.on("keyup", (key) => {
-    console.log("key", key);
-    console.log("phoneState", phoneState);
-
     if (!phoneState && key === 112 && alt.gameControlsEnabled()) {
         phoneState = true;
         openPhone();
