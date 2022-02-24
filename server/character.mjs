@@ -58,14 +58,28 @@ export function setup(player, userId) {
                             "chore:client:character:load",
                             character
                         );
+
+                        alt.emitClient(
+                            player,
+                            "core:client:notification",
+                            `Welcome back, ${player.name}!`
+                        );
+
+                        alt.emitClient(
+                            player,
+                            "core:client:notification",
+                            `You are now playing as ${names.firstname} ${names.surname}`
+                        );
                     }
                 );
             } else {
                 alt.emit(
                     "sql:altv:query",
-                    `INSERT INTO characters (userId, name, sex, skin) VALUES (${userId}, '${await generateNames(
+                    `INSERT INTO characters (userId, name, sex, dob, skin) VALUES (${userId}, '${await generateNames(
                         "male"
-                    )}', "male", '${generateSkin("male")}')`,
+                    )}', '${generateDOB()}', "male", '${generateSkin(
+                        "male"
+                    )}')`,
                     () => {
                         setup(player, userId);
                     }
@@ -165,13 +179,22 @@ function generateSkin(sex) {
         }
     };
 
+    let hairColor = Math.floor(
+        Math.random() * (skin["hairColor1"].max - skin["hairColor1"].min + 1) +
+            skin["hairColor1"].min
+    );
+
     for (const key in skin) {
         if (skin.hasOwnProperty(key)) {
             if (typeof skin[key] === "object") {
-                skin[key] = Math.floor(
-                    Math.random() * (skin[key].max - skin[key].min + 1) +
-                        skin[key].min
-                );
+                if (key.toLowerCase().includes("haircolor"))
+                    skin[key] = hairColor;
+                else {
+                    skin[key] = Math.floor(
+                        Math.random() * (skin[key].max - skin[key].min + 1) +
+                            skin[key].min
+                    );
+                }
             }
         }
     }
@@ -195,4 +218,20 @@ async function generateNames(sex) {
         firstname: names[0],
         surname: names[1]
     });
+}
+
+/**
+ * Generate date of birthw
+ * @param {Number} startY - Start year (current year - startY)
+ * @param {Number} endY - End year (current year - endY)
+ * @returns {Date}
+ */
+function generateDOB(startY = 40, endY = 18) {
+    const current = new Date(),
+        start = new Date(current.getFullYear() - startY, 0, 1),
+        end = new Date(current.getFullYear() - endY, 11, 31);
+
+    return new Date(
+        start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    );
 }
