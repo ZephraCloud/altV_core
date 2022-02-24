@@ -1,0 +1,10 @@
+{
+    "cash": {
+        "message": "Cash",
+        "description": "Money in coins or banknotes"
+    },
+    "bank": {
+        "message": "Bank",
+        "description": "Where you can get credit"
+    }
+}
