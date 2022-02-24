@@ -73,11 +73,16 @@ export function setup(player, userId) {
                     }
                 );
             } else {
+                const healthData = JSON.stringify({
+                    health: 100,
+                    bloodType: generateBloodType()
+                });
+
                 alt.emit(
                     "sql:altv:query",
-                    `INSERT INTO characters (userId, name, sex, dob, skin) VALUES (${userId}, '${await generateNames(
+                    `INSERT INTO characters (userId, name, sex, dob, health, skin) VALUES (${userId}, '${await generateNames(
                         "male"
-                    )}', '${generateDOB()}', "male", '${generateSkin(
+                    )}', '${generateDOB()}', "male",  '${healthData}','${generateSkin(
                         "male"
                     )}')`,
                     () => {
@@ -234,4 +239,34 @@ function generateDOB(startY = 40, endY = 18) {
     return new Date(
         start.getTime() + Math.random() * (end.getTime() - start.getTime())
     );
+}
+
+/**
+ * Generate blood type
+ * @returns {string}
+ * @example generateBloodType() => "A+"
+ */
+function generateBloodType() {
+    const num = Math.random() * 100;
+
+    switch (true) {
+        case num <= 1:
+            return "AB-";
+        case num <= 2:
+            return "B-";
+        case num <= 3:
+            return "AB+";
+        case num <= 7:
+            return "A-";
+        case num <= 8:
+            return "0-";
+        case num <= 9:
+            return "B+";
+        case num <= 33:
+            return "A+";
+        case num <= 37:
+            return "0+";
+        default:
+            return "0+";
+    }
 }
