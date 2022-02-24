@@ -43,10 +43,6 @@ ALTER TABLE `characters`
   ADD PRIMARY KEY (`userId`);
 
 --
--- AUTO_INCREMENT for dumped tables
---
-
---
 -- AUTO_INCREMENT for table `bans`
 --
 ALTER TABLE `bans`
