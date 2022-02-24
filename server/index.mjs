@@ -132,6 +132,35 @@ cmd.register("kick", (player, args) => {
     }
 });
 
+cmd.register("ban", (player, args) => {
+    if (!player.getMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            "{FF00FF}You don`t have enough permissions to use this command"
+        );
+    }
+
+    if (args.length > 0) {
+        const _player = alt.Player.all.filter((p) => p.name === args[0])[0],
+            bannedUntil = new Date();
+
+        bannedUntil.setDate(bannedUntil.getDate() + Number(args[1]));
+
+        alt.emit(
+            "sql:altv:query",
+            `INSERT INTO bans (userId, reason, bannedBy, until) VALUES (${_player.getSyncedMeta(
+                "userId"
+            )}, 'Banned by admin', ${player.getSyncedMeta(
+                "userId"
+            )}, '${bannedUntil.getFullYear()}-${bannedUntil.getMonth()}-${bannedUntil.getDate()}')`
+        );
+
+        cmd.sendChat(_player, `{FF0000}You were banned from the server`);
+        cmd.broadcastChat(`{5555AA}${_player.name} {FFFFFF} got banned`);
+        _player.kick("You were banned from the server");
+    }
+});
+
 // cmd.register("poweroff", player => {
 //     alt.emitAllClients("blackouton");
 // });
