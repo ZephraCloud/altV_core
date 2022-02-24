@@ -116,7 +116,7 @@ cmd.register("logout", (player) => {
 });
 
 cmd.register("kick", (player, args) => {
-    if (!player.getMeta("admin")) {
+    if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
             "{FF00FF}You don`t have enough permissions to use this command"
@@ -133,7 +133,7 @@ cmd.register("kick", (player, args) => {
 });
 
 cmd.register("ban", (player, args) => {
-    if (!player.getMeta("admin")) {
+    if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
             "{FF00FF}You don`t have enough permissions to use this command"
