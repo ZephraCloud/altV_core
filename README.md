@@ -1,4 +1,5 @@
 # altV_core
+[![Crowdin](https://badges.crowdin.net/zephra-altv/localized.svg)](https://crowdin.com/project/zephra-altv)
 
 ## Config
 ```json
