@@ -1,0 +1,16 @@
+pull_request_rules:
+  - name: Automatic merge on approval
+    conditions:
+      - base=main
+      - "#approved-reviews-by>=1"
+    actions:
+      merge:
+        method: squash
+
+  - name: Automatic merge when the pull request is made by zaphyCloud
+    conditions:
+      - base=main
+      - author=zaphyCloud
+    actions:
+      merge:
+        method: squash
