@@ -1,4 +1,9 @@
 {
     "cash": "Cash",
-    "bank": "Bank"
+    "bank": "Bank",
+    "player.join": "{0} {ff0000}joined {ffffff}({1} players online)",
+    "player.left": "{0} {ff0000}left {ffffff}({1} players online)",
+    "player.missingPermission": "You don't have permission to use this command!",
+    "player.kick": "You have been kicked off the server!",
+    "player.ban": "You have been banned from the server!"
 }
