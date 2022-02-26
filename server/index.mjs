@@ -249,13 +249,12 @@ alt.on("playerDisconnect", (player, reason) => {
             health: player.health,
             armour: player.armour,
             bloodType: null
-        };
+        },
+        userId = player.getSyncedMeta("userId");
 
     alt.emit(
         "sql:altv:query",
-        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
-            "userId"
-        )}`,
+        `SELECT * FROM characters WHERE userId = ${userId}`,
         (result) => {
             const character = result[0];
 
@@ -269,7 +268,7 @@ alt.on("playerDisconnect", (player, reason) => {
                     health
                 )}', position = '${JSON.stringify(
                     pos
-                )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+                )}' WHERE userId = ${userId}`
             );
         }
     );
