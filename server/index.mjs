@@ -29,11 +29,6 @@ setTimeout(() => {
     alt.emitAllClients("core:client:login");
 }, 5000);
 
-alt.on("playerConnect", (player) => {
-    log.log(`${player.name} connected`);
-    alt.emitClient(player, "core:client:login");
-});
-
 alt.onClient("core:server:checkLogin", async (player, email, password) => {
     if (!email || !password)
         return log.warn("Login check failed. No email or password provided.");
@@ -189,8 +184,11 @@ alt.on("playerDeath", (player, killer, weaponHash) => {
 
 autoStart.startAll();
 alt.on("playerConnect", (player) => {
+    log.log(`${player.name} connected`);
+
     player.model = "mp_m_freemode_01";
 
+    alt.emitClient(player, "core:client:login");
     alt.emitClient(player, "core:client:requestIpls");
 
     cmd.broadcastChat(
