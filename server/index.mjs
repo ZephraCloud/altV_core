@@ -199,7 +199,36 @@ alt.on("playerConnect", (player) => {
 });
 
 alt.on("playerDisconnect", (player, reason) => {
-    character.save(player);
+    const weapons = player.weapons,
+        pos = player.pos,
+        health = {
+            health: player.health,
+            armour: player.armour,
+            bloodType: null
+        };
+
+    alt.emit(
+        "sql:altv:query",
+        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            const character = result[0];
+
+            health.bloodType = JSON.parse(character.health).bloodType;
+
+            alt.emit(
+                "sql:altv:query",
+                `UPDATE characters SET weapons = '${JSON.stringify(
+                    weapons
+                )}', health = '${JSON.stringify(
+                    health
+                )}', position = '${JSON.stringify(
+                    pos
+                )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+            );
+        }
+    );
 
     cmd.broadcastChat(
         `{1cacd4}${player.name} {ff0000}left {ffffff}(${
