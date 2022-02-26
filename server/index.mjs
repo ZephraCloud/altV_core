@@ -26,7 +26,10 @@ sql.create({
 });
 
 setTimeout(() => {
-    alt.emitAllClients("core:client:login");
+    for (const player of alt.Player.all) {
+        if (!player.getSyncedMeta("userId"))
+            alt.emitClient(player, "core:client:login");
+    }
 }, 5000);
 
 alt.onClient("core:server:checkLogin", async (player, email, password) => {
