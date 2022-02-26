@@ -186,6 +186,8 @@ cmd.register("car", (player, args) => {
             0
         );
 
+        alt.emit(player, "core:client:enterVehicle", vehicle, 16);
+
         vehicle.numberPlateText = utils.generateLicensePlateText();
     } catch (e) {
         cmd.sendChat(

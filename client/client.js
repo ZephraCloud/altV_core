@@ -108,6 +108,18 @@ alt.onServer("core:client:teleportToWaypoint", () => {
     }, 1400);
 });
 
+alt.onServer("core:client:enterVehicle", (vehicle, flag) => {
+    native.taskEnterVehicle(
+        native.getPlayerPed(alt.Player),
+        vehicle,
+        -1,
+        -1,
+        1.0,
+        flag,
+        0
+    );
+});
+
 alt.on("playerEnteringVehicle", (player, vehicle, seat) => {
     if (player.valid && vehicle.valid) {
         if (
