@@ -14,7 +14,8 @@
         "exclude": [
             "zephra_core"
         ]
-    }
+    },
+    "language": "en_US"
 }
 ```
 
