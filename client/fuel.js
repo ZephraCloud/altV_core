@@ -52,19 +52,29 @@ setInterval(() => {
 }, 1000);
 
 export function getVehicleFuel(vehicle) {
+    if (!vehicle.valid) return;
+
     const list = {
         types: {
             0: 45, // Cars (Compacts)
             1: 50, // Cars (Sedans)
             2: 80, // Cars (SUVs)
+            3: 80, // Cars (Coupes)
             4: 70, // Cars (Muscle)
             5: 80, // Cars (Sports Classic)
             6: 65, // Cars (Sports)
             7: 110, // Cars (Super)
             8: 20, // Motorcycles
+            9: 60, // Off-road
+            10: 110, // Industrial
             11: 70, // Utility
             12: 70, // Vans
+            14: 150, // Boats
+            15: 150, // Helicopters
+            16: 150, // Planes
             17: 60, // Bus, Taxi, trash ... (Service)
+            18: 80, // Emergency
+            19: 120, // Military
             20: 400 // Trucks (Commercial)
         },
         models: {
@@ -91,7 +101,13 @@ export function getVehicleFuel(vehicle) {
             utillitruck: 200,
             utillitruck2: 200,
             utillitruck3: 50,
-            slamtruck: 75
+            slamtruck: 75,
+            blazer: 20,
+            blazer2: 20,
+            blazer3: 20,
+            blazer4: 20,
+            blazer5: 20,
+            verus: 20
         }
     };
 
@@ -105,19 +121,29 @@ export function getVehicleFuel(vehicle) {
 }
 
 export function getVehicleFuelConsumption(vehicle) {
+    if (!vehicle.valid) return;
+
     const list = {
         types: {
             0: 0.08, // Cars (Compacts)
             1: 0.075, // Cars (Sedans)
             2: 0.13, // Cars (SUVs)
+            3: 0.1, // Cars (Coupes)
             4: 0.2, // Cars (Muscle)
             5: 0.154, // Cars (Sports Classic)
             6: 0.102, // Cars (Sports)
             7: 0.116, // Cars (Super)
             8: 0.07, // Motorcycles
+            9: 0.1, // Off-road
+            10: 0.25, // Industrial
             11: 0.04, // Utility
             12: 0.15, // Vans
+            14: 0.21, // Boats
+            15: 0.9, // Helicopters
+            16: 1.0, // Planes
             17: 0.07, // Bus, Taxi, trash ... (Service)
+            18: 0.125, // Emergency
+            19: 0.5, // Military
             20: 0.35 // Trucks (Commercial)
         },
         models: {
