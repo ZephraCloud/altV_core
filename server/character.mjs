@@ -108,7 +108,7 @@ export function setup(player, userId) {
 }
 
 export function save(player, logout = false) {
-    if (!player) return;
+    if (!player.valid) return;
 
     alt.emit(
         "sql:altv:query",
