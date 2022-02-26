@@ -2,7 +2,6 @@
   "name": "zephra_core",
   "version": "1.0.0",
   "description": "Zephra core",
-  "main": "",
   "dependencies": {
     "mysql": "^2.18.1",
     "node-fetch": "^3.1.0"
