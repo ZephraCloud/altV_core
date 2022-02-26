@@ -8,6 +8,7 @@ import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
 import * as character from "./character.mjs";
 import * as localization from "./localization.mjs";
+import * as utils from "./utils.mjs";
 
 if (!config) log.error("Couldn't load config file.");
 
@@ -168,6 +169,42 @@ cmd.register("ban", (player, args) => {
         cmd.broadcastChat(`{5555AA}${_player.name} {FFFFFF} got banned`);
         _player.kick(localization.getString("player.ban"));
     }
+});
+
+cmd.register("car", (player, args) => {
+    if (args.length === 0)
+        return cmd.sendChat(player, "Usage: /car (vehicleModel)");
+
+    try {
+        const vehicle = new alt.Vehicle(
+            args[0],
+            player.pos.x,
+            player.pos.y,
+            player.pos.z,
+            0,
+            0,
+            0
+        );
+
+        vehicle.numberPlateText = utils.generateLicensePlateText();
+    } catch (e) {
+        cmd.sendChat(
+            player,
+            `{ff0000} Vehicle Model {ff9500}${args[0]} {ff0000}does not exist..`
+        );
+        alt.log(e);
+    }
+});
+
+cmd.register("dv", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    if (player.vehicle) player.vehicle.destroy();
 });
 
 // cmd.register("poweroff", player => {
