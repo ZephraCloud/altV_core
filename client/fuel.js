@@ -11,27 +11,31 @@ setInterval(() => {
     if (!vehicle.getMeta("consumption"))
         vehicle.setMeta("consumption", getVehicleFuelConsumption(vehicle));
 
-    const fuel = vehicle.getMeta("fuel");
-    const consumption = vehicle.getMeta("consumption");
-    const kmh = vehicle.speed * 3.6;
+    const fuel = vehicle.getMeta("fuel"),
+        consumption = vehicle.getMeta("consumption"),
+        vehSpeed =
+            vehicle.speed === 0
+                ? native.getEntitySpeed(vehicle)
+                : vehicle.speed,
+        multiply = native.shouldUseMetricMeasurements() ? 3.6 : 2.236936,
+        kmh = (vehSpeed * multiply).toFixed(1);
 
     if (fuel > 0) {
         if (kmh > 0) {
             const oldPos = vehicle.pos;
 
             setTimeout(() => {
-                const newPos = vehicle.pos;
-
-                const distance = native.getDistanceBetweenCoords(
-                    oldPos.x,
-                    oldPos.y,
-                    oldPos.z,
-                    newPos.x,
-                    newPos.y,
-                    newPos.z,
-                    false
-                );
-                const fuelConsumption = distance * 3.6 * (consumption / 1000);
+                const newPos = vehicle.pos,
+                    distance = native.getDistanceBetweenCoords(
+                        oldPos.x,
+                        oldPos.y,
+                        oldPos.z,
+                        newPos.x,
+                        newPos.y,
+                        newPos.z,
+                        false
+                    ),
+                    fuelConsumption = distance * 3.6 * (consumption / 1000);
 
                 vehicle.setMeta("fuel", fuel - fuelConsumption);
 
