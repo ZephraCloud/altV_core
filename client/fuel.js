@@ -43,9 +43,6 @@ setInterval(() => {
                     "distance",
                     vehicle.getMeta("distance") ?? 0 + distance
                 );
-
-                console.log("FUEL", fuel - fuelConsumption);
-                console.log("DISTANCE", distance);
             }, 1000);
         }
     } else vehicle.engineOn = false;
