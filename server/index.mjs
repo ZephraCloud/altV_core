@@ -7,6 +7,7 @@ import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
 import * as character from "./character.mjs";
+import * as localization from "./localization.mjs";
 
 if (!config) log.error("Couldn't load config file.");
 
@@ -79,7 +80,7 @@ cmd.register("dimension", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
-            "{FF00FF}You don`t have enough permissions to use this command"
+            localization.getString("player.missingPermission")
         );
     }
 
@@ -94,7 +95,7 @@ cmd.register("tp", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
-            "{FF00FF}You don`t have enough permissions to use this command"
+            localization.getString("player.missingPermission")
         );
     }
 
@@ -127,16 +128,16 @@ cmd.register("kick", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
-            "{FF00FF}You don`t have enough permissions to use this command"
+            localization.getString("player.missingPermission")
         );
     }
 
     if (args.length > 0) {
         const _player = alt.Player.all.filter((p) => p.name === args[0])[0];
 
-        cmd.sendChat(_player, `{FF0000}You were kicked from the server`);
+        cmd.sendChat(_player, localization.getString("player.kick"));
         cmd.broadcastChat(`{5555AA}${_player.name} {FFFFFF}kicked`);
-        _player.kick("You were kicked from the server");
+        _player.kick(localization.getString("player.kick"));
     }
 });
 
@@ -144,7 +145,7 @@ cmd.register("ban", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
             player,
-            "{FF00FF}You don`t have enough permissions to use this command"
+            localization.getString("player.missingPermission")
         );
     }
 
@@ -163,9 +164,9 @@ cmd.register("ban", (player, args) => {
             )}, '${bannedUntil.getFullYear()}-${bannedUntil.getMonth()}-${bannedUntil.getDate()}')`
         );
 
-        cmd.sendChat(_player, `{FF0000}You were banned from the server`);
+        cmd.sendChat(_player, localization.getString("player.ban"));
         cmd.broadcastChat(`{5555AA}${_player.name} {FFFFFF} got banned`);
-        _player.kick("You were banned from the server");
+        _player.kick(localization.getString("player.ban"));
     }
 });
 
@@ -195,7 +196,10 @@ alt.on("playerConnect", (player) => {
     alt.emitClient(player, "core:client:requestIpls");
 
     cmd.broadcastChat(
-        `{1cacd4}${player.name} {00ff00}joined {ffffff}(${alt.Player.all.length} players online)`
+        localization
+            .getString("player.join")
+            .replace("{0}", player.name)
+            .replace("{1}", alt.Player.all.length)
     );
 });
 
@@ -232,9 +236,10 @@ alt.on("playerDisconnect", (player, reason) => {
     );
 
     cmd.broadcastChat(
-        `{1cacd4}${player.name} {ff0000}left {ffffff}(${
-            alt.Player.all.length - 1
-        } players online)`
+        localization
+            .getString("player.left")
+            .replace("{0}", player.name)
+            .replace("{1}", alt.Player.all.length - 1)
     );
 });
 
