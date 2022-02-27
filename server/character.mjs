@@ -146,9 +146,58 @@ export function save(player, logout = false) {
 }
 
 export function logout(player) {
-    if (!player) return;
+    if (!player.valid) return;
 
     save(player, true);
+}
+
+export function getMoney(player, type) {
+    if (!player.valid) return;
+
+    let Return = undefined;
+
+    alt.emit(
+        "sql:altv:query",
+        `SELECT money FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            if (!result?.[0])
+                return log.error("User not found", "CORE,CHARACTER");
+
+            const money = JSON.parse(result[0].money);
+
+            Return = type ? money[type] : money;
+        }
+    );
+
+    return Return;
+}
+
+export function removeMoney(player, type, amount) {
+    if (!player.valid || !type) return;
+
+    alt.emit(
+        "sql:altv:query",
+        `SELECT money FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            if (!result?.[0])
+                return log.error("User not found", "CORE,CHARACTER");
+
+            const money = JSON.parse(result[0].money);
+
+            money[type] -= amount;
+
+            alt.emit(
+                "sql:altv:query",
+                `UPDATE characters SET money = '${JSON.stringify(
+                    money
+                )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+            );
+        }
+    );
 }
 
 /**
