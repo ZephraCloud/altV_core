@@ -9,6 +9,7 @@ import * as autoStart from "./autostart.mjs";
 import * as character from "./character.mjs";
 import * as localization from "./localization.mjs";
 import * as utils from "./utils.mjs";
+import * as blips from "./blips.mjs";
 
 if (!config) log.error("Couldn't load config file.");
 
@@ -233,6 +234,8 @@ alt.on("playerConnect", (player) => {
 
     alt.emitClient(player, "core:client:login");
     alt.emitClient(player, "core:client:requestIpls");
+
+    blips.sync(player);
 
     cmd.broadcastChat(
         localization
