@@ -226,7 +226,6 @@ alt.on("playerDeath", (player, killer, weaponHash) => {
     player.spawn(player.pos.x, player.pos.y, player.pos.z, 0);
 });
 
-autoStart.startAll();
 alt.on("playerConnect", (player) => {
     log.log(`${player.name} connected`);
 
@@ -284,7 +283,10 @@ alt.on("playerDisconnect", (player, reason) => {
     );
 });
 
+// autoStart.startAll();
 
 alt.on("resourceStop", () => {
+    // for (const player of alt.Player.all) character.save(player);
+
     sql.remove("everything");
 });
