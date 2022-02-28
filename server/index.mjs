@@ -172,7 +172,7 @@ cmd.register("ban", (player, args) => {
     }
 });
 
-cmd.register("car", (player, args) => {
+cmd.register("veh", (player, args) => {
     if (args.length === 0)
         return cmd.sendChat(player, "Usage: /car (vehicleModel)");
 
