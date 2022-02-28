@@ -77,6 +77,18 @@ export function setup(player, userId) {
                             player.spawn(position.x, position.y, position.z);
                         }
 
+                        // if (character.clothes) {
+                        //     const clothes = JSON.parse(character.clothes);
+
+                        //     for (let i = 0; i <= 11; i++) {
+                        //         player.setClothes(
+                        //             clothes[i].component,
+                        //             clothes[i].drawable,
+                        //             clothes[i].texture
+                        //         );
+                        //     }
+                        // }
+
                         const healthData = JSON.parse(character.health);
 
                         player.health = healthData.health;
@@ -129,6 +141,8 @@ export function save(player, logout = false) {
                     player.weapons
                 )}', health = '${health}', position = '${JSON.stringify(
                     player.pos
+                )}', skin = '${JSON.stringify(
+                    convertSkin(player, character.skin)
                 )}' WHERE userId = ${player.getSyncedMeta("userId")}`
             );
         }
@@ -349,4 +363,22 @@ function generateBloodType() {
         default:
             return "0+";
     }
+}
+
+/**
+ * Generate skin object
+ * @param {alt.Player} player
+ * @param {Object} skin
+ * @returns {Object}
+ */
+function convertSkin(player, skin) {
+    if (!player.valid || !skin) return;
+
+    skin = JSON.parse(skin);
+
+    if (!skin.clothes) skin.clothes = {};
+
+    for (let i = 0; i <= 11; i++) skin.clothes[i] = player.getClothes(i);
+
+    return skin;
 }
