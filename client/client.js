@@ -291,6 +291,10 @@ alt.onServer("core:client:requestIpls", () => {
     native.requestIpl("vw_casino_main");
 });
 
+alt.on("taskChange", (oldTask, newTask) => {
+    if (newTask === 160) overrideVehicleEntrance(); // 160 === ENTERING_VEHICLE
+});
+
 alt.onServer("core:client:notification", notification);
 alt.onServer("core:client:advancedNotification", advancedNotification);
 
@@ -350,6 +354,69 @@ function closePhone() {
     webview.phone.isVisible = false;
     alt.showCursor(false);
     alt.toggleGameControls(true);
+}
+
+export function sqrtDistance(playerPos, secondPos) {
+    return Math.sqrt(
+        (playerPos.x - secondPos.x) * (playerPos.x - secondPos.x) +
+            (playerPos.y - secondPos.y) * (playerPos.y - secondPos.y) +
+            (playerPos.z - secondPos.z) * (playerPos.z - secondPos.z)
+    );
+}
+
+export function getClosestVehicle() {
+    const obj = {
+        distance: null,
+        vehicle: null
+    };
+
+    for (const vehicle of alt.Vehicle.streamedIn) {
+        const distance = sqrtDistance(alt.Player.local.pos, vehicle.pos);
+        if (obj.distance == null || obj.distance > distance) {
+            obj.distance = distance;
+            obj.vehicle = vehicle;
+        }
+    }
+
+    return obj.vehicle;
+}
+
+function getClosestVehicleDoor(vehicle) {
+    const _vehicle = vehicle == null ? getClosestVehicle() : vehicle;
+    if (!_vehicle) return -1;
+
+    const obj = { distance: null, door: -1 };
+
+    for (let i = 0, l = native.getNumberOfVehicleDoors(_vehicle); i < l; i++) {
+        const distance = sqrtDistance(
+            alt.Player.local.pos,
+            native.getEntryPositionOfDoor(_vehicle, i)
+        );
+        if (obj.distance == null || obj.distance > distance) {
+            obj.distance = distance;
+            obj.door = i;
+        }
+    }
+
+    return obj.door;
+}
+
+function overrideVehicleEntrance() {
+    const vehicle = getClosestVehicle();
+    if (!vehicle) return;
+
+    const vehicledDoor = getClosestVehicleDoor(vehicle);
+    if (vehicledDoor > -1) {
+        native.taskEnterVehicle(
+            alt.Player.local.scriptID,
+            vehicle,
+            -1,
+            vehicledDoor - 1,
+            1,
+            1,
+            0
+        );
+    }
 }
 
 alt.everyTick(() => {
