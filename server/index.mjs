@@ -74,8 +74,45 @@ alt.onClient("core:server:checkLogin", async (player, email, password) => {
     });
 });
 
-cmd.register("revive", (player) => {
-    player.spawn(player.pos.x, player.pos.y, player.pos.z, 0);
+cmd.register("revive", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    const _player = args[0] ? utils.getPlayerByName(args[0]) : player;
+
+    _player.spawn(_player.pos.x, _player.pos.y, _player.pos.z, 0);
+    _player.clearBloodDamage();
+});
+
+cmd.register("heal", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    const _player = args[1] ? utils.getPlayerByName(args[1]) : player;
+
+    _player.health = args[0] ?? _player.maxHealth;
+});
+
+cmd.register("posInfo", (player) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    cmd.sendChat(
+        player,
+        `x = ${player.pos.x}, y = ${player.pos.y}, z = ${player.pos.z}`
+    );
 });
 
 cmd.register("dimension", (player, args) => {
@@ -86,11 +123,9 @@ cmd.register("dimension", (player, args) => {
         );
     }
 
-    if (args.length > 0) {
-        const _player = alt.Player.all.filter((p) => p.name === args[0])[0];
+    const _player = args[0] ? utils.getPlayerByName(args[0]) : player;
 
-        _player.dimension = Number(args[1]);
-    }
+    _player.dimension = Number(args[1]);
 });
 
 cmd.register("tp", (player, args) => {
