@@ -1,6 +1,5 @@
 window.onload = () => {
-    const content = document.querySelector("div.phone div.phone-content"),
-        iframe = document.querySelector("iframe");
+    const content = document.querySelector("div.phone div.phone-content");
 
     loadHome();
 
@@ -10,15 +9,36 @@ window.onload = () => {
     function loadHome() {
         loadBackground();
 
-        iframe.src = "home.html";
+        fetch("home.html")
+            .then((response) => response.text())
+            .then((text) => {
+                document.getElementById("appStyle").href = "";
+                document.getElementById("appScript").href = "";
 
-        content.innerHTML = iframe.contentWindow.document;
+                content.innerHTML = text;
+
+                content.querySelectorAll("div.app[data-app]").forEach((app) => {
+                    app.addEventListener("click", (event) => {
+                        loadApp(app.getAttribute("data-app"));
+                    });
+                });
+            });
     }
 
     function loadApp(app) {
-        iframe.src = `apps/${app}.html`;
+        fetch(`apps/${app}/index.html`)
+            .then((response) => response.text())
+            .then((text) => {
+                content.innerHTML = text;
 
-        content.innerHTML = iframe.contentWindow.document;
+                document.getElementById(
+                    "appStyle"
+                ).href = `apps/${app}/style.css`;
+
+                document.getElementById(
+                    "appScript"
+                ).href = `apps/${app}/app.js`;
+            });
     }
 
     function loadBackground() {
