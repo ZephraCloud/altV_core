@@ -318,7 +318,7 @@ function generateDOB(startY = 40, endY = 18) {
             start.getTime() + Math.random() * (end.getTime() - start.getTime())
         );
 
-    return `${start.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
 /**
