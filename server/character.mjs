@@ -313,11 +313,12 @@ async function generateNames(sex) {
 function generateDOB(startY = 40, endY = 18) {
     const current = new Date(),
         start = new Date(current.getFullYear() - startY, 0, 1),
-        end = new Date(current.getFullYear() - endY, 11, 31);
+        end = new Date(current.getFullYear() - endY, 11, 31),
+        date = new Date(
+            start.getTime() + Math.random() * (end.getTime() - start.getTime())
+        );
 
-    return new Date(
-        start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    );
+    return `${start.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
 /**
