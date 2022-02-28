@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .phone {
     position: relative;
     height: 663px;
@@ -151,17 +155,93 @@
 }
 
 .navbar {
-    width: calc(100% - 30px);
-    height: 100px;
+    width: calc(100% - 15px);
+    height: 80px;
     position: absolute;
-    bottom: 15px;
-    left: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 8px;
+    bottom: 7.5px;
+    left: 7.5px;
+    border-radius: 23px;
+    background-color: rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.apps {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 75%;
+    padding: 30px 10px;
+    user-select: none;
+}
+
+.apps .app-name {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+
+.apps .app-icon img {
+    width: 85%;
 }
 
 .app {
-
+    flex: calc(25% - 8px);
+    flex-basis: calc(25% - 8px);
+    max-width: calc(25% - 8px);
+    margin: 0 4px;
+    text-align: center;
 }
 
-iframe {
-    display: none;
+.app-icon img {
+    width: 100%;
+    padding-top: 4px;
+    vertical-align: middle;
+}
+
+.nav {
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    bottom: 5px;
+    left: 50%;
+    border-radius: 8px;
+    background-color: white;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.clock {
+    position: absolute;
+    top: 5px;
+    right: calc(100% - 43px);
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    z-index: 9999;
+}
+
+.signals {
+    position: absolute;
+    top: 5px;
+    left: calc(100% - 45px);
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    z-index: 9999;
+}
+
+.signals i {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.signals:last-child {
+    margin-right: 0;
 }
