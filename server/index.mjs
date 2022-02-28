@@ -210,6 +210,17 @@ cmd.register("dv", (player, args) => {
     if (player.vehicle) player.vehicle.destroy();
 });
 
+cmd.register("repair", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    if (player.vehicle) player.vehicle.repair();
+});
+
 // cmd.register("poweroff", player => {
 //     alt.emitAllClients("blackouton");
 // });
