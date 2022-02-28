@@ -22,3 +22,4 @@
 ## Credits
 * [Stuyk](https://github.com/Stuyk) for the great documentation
 * [Colin Mitchell](https://muffinlabs.com) for the name generator
+* [YannBCF](https://github.com/YannBCF)
