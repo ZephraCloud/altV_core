@@ -326,9 +326,11 @@ function openPhone() {
 
     phoneState = true;
 
-    webview.phone = new alt.WebView(
-        "http://resource/client/html/phone/index.html"
-    );
+    if (!webview.phone) {
+        webview.phone = new alt.WebView(
+            "http://resource/client/html/phone/index.html"
+        );
+    } else webview.phone.isVisible = true;
 
     alt.showCursor(true);
     //alt.toggleGameControls(false);
@@ -345,7 +347,7 @@ function closePhone() {
     phoneState = false;
 
     webview.phone.unfocus();
-    webview.phone.destroy();
+    webview.phone.isVisible = false;
     alt.showCursor(false);
     alt.toggleGameControls(true);
 }
