@@ -173,6 +173,13 @@ cmd.register("ban", (player, args) => {
 });
 
 cmd.register("veh", (player, args) => {
+    // if (!player.getSyncedMeta("admin")) {
+    //     return cmd.sendChat(
+    //         player,
+    //         localization.getString("player.missingPermission")
+    //     );
+    // }
+
     if (args.length === 0)
         return cmd.sendChat(player, "Usage: /car (vehicleModel)");
 
@@ -295,6 +302,32 @@ alt.on("playerDisconnect", (player, reason) => {
 });
 
 // autoStart.startAll();
+
+// async function shutdownProcess() {
+//     try {
+//         log.warn("Shutting down...", "CORE");
+
+//         alt.Player.all.forEach((_player, i) => {
+//             if (_player && _player.valid) character.save(_player);
+
+//             if (i === alt.Player.all.length - 1) {
+//                 setTimeout(() => {
+//                     process.kill(process.pid, "SIGKILL");
+
+//                     log.warn("Shutdown complete", "CORE");
+//                 }, 1000);
+//             }
+//         });
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+
+// process.stdin.resume();
+// process.on("SIGINT", shutdownProcess);
+// process.on("SIGHUP", shutdownProcess);
+// process.on("SIGQUIT", shutdownProcess);
+// process.on("SIGTERM", shutdownProcess);
 
 alt.on("resourceStop", () => {
     // for (const player of alt.Player.all) character.save(player);
