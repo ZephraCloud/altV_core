@@ -1,3 +1,5 @@
+import * as alt from "alt-server";
+
 export function generateLicensePlateText() {
     const pattern = "NLLLNNN",
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
@@ -12,4 +14,8 @@ export function generateLicensePlateText() {
     }
 
     return text;
+}
+
+export function getPlayerByName(name) {
+    return alt.Player.all.filter((p) => p.name === name)[0];
 }
