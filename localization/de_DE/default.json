@@ -1,7 +1,7 @@
 {
     "cash": "Bargeld",
     "bank": "Bank",
-    "player.join": "{0} {ff0000}ist {ffffff}beigetreten ({1} Spieler online)",
+    "player.join": "{0} {00ff00}ist {ffffff}beigetreten ({1} Spieler online)",
     "player.left": "{0} {ff0000}hat {ffffff}verlassen ({1} Spieler online)",
     "player.missingPermission": "Du hast nicht genug Rechte, um diesen Befehl zu verwenden!",
     "player.kick": "Du wurdest vom Server gekickt!",
