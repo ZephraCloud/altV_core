@@ -90,7 +90,10 @@ alt.on("connectionComplete", () => {
     // webview.login.on("core:client:webview:login", (email, password) => {
     //     alt.emitServer("core:server:checkLogin", email, password);
     // });
+    alt.emitServer("core:server:weather:setClientTime");
+
     const blip = new alt.PointBlip(5943.5679611650485, -6272.114833599767, 2);
+
     blip.alpha = 0;
 });
 
