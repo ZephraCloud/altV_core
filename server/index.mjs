@@ -304,6 +304,8 @@ alt.on("playerConnect", (player) => {
 });
 
 alt.on("playerDisconnect", (player, reason) => {
+    log.log(`${player.name} disconnected (${reason})`);
+
     const weapons = player.weapons,
         pos = player.pos,
         health = {
