@@ -82,6 +82,32 @@ alt.onClient("core:server:weather:setClientTime", (player) => {
     });
 });
 
+alt.onClient("core:server:playerlist:teleportTo", (player, _player) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    _player = utils.getPlayerBySocialId(_player);
+
+    player.pos = _player.pos;
+});
+
+alt.onClient("core:server:playerlist:teleportToMe", (player, _player) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    _player = utils.getPlayerBySocialId(_player);
+
+    _player.pos = player.pos;
+});
+
 cmd.register("revive", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
