@@ -283,6 +283,44 @@ cmd.register("repair", (player, args) => {
     if (player.vehicle) player.vehicle.repair();
 });
 
+cmd.register("playerlist", (player) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    const items = [];
+
+    alt.Player.all.forEach((p) => {
+        items.push({
+            label: p.name,
+            rightText: `${p.ping}ms`,
+            type: "submenu",
+            items: [
+                {
+                    label: localization.getString("player.teleportTo"),
+                    type: "button",
+                    clickData: p.socialID,
+                    onClick: "core:server:playerlist:teleportTo"
+                },
+                {
+                    label: localization.getString("player.teleportToMe"),
+                    type: "button",
+                    clickData: p.socialID,
+                    onClick: "core:server:playerlist:teleportToMe"
+                }
+            ]
+        });
+    });
+
+    alt.emitClient(player, "core:client:menu:create", {
+        title: "Playerlist",
+        items: items
+    });
+});
+
 // cmd.register("poweroff", player => {
 //     alt.emitAllClients("blackouton");
 // });
