@@ -23,13 +23,43 @@ alt.onServer("core:client:login", () => {
     });
 });
 
+let vehFlashLight = false;
+
+alt.on("keydown", (key) => {
+    const vehicle = alt.Player.local.vehicle;
+
+    // Key: L
+    if (key === 76 && alt.gameControlsEnabled() && vehicle) {
+        const currentLight = native
+                .getVehicleLightsState(vehicle)
+                .toString()
+                .split(","),
+            isLightOn = currentLight[1] === "1",
+            isHighBeamOn = currentLight[2] === "1";
+
+        if (!isHighBeamOn) native.setVehicleLights(vehicle, 2);
+
+        vehFlashLight = currentLight;
+    }
+});
+
 alt.on("keyup", (key) => {
+    const vehicle = alt.Player.local.vehicle;
+
+    // Key: F1
     if (!phoneState && key === 112 && alt.gameControlsEnabled()) {
         phoneState = true;
         openPhone();
     } else if (phoneState && key === 112 && alt.gameControlsEnabled()) {
         phoneState = false;
         closePhone();
+    }
+
+    // Key: L
+    if (key === 76 && alt.gameControlsEnabled() && vehicle && vehFlashLight) {
+        native.setVehicleLights(vehicle, Number(vehFlashLight[1]));
+
+        vehFlashLight = false;
     }
 });
 
