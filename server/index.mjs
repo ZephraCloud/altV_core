@@ -218,6 +218,12 @@ cmd.register("veh", (player, args) => {
     if (args.length === 0)
         return cmd.sendChat(player, "Usage: /car (vehicleModel)");
 
+    if (config.vehicleSpawnBlacklist.includes(args[0]))
+        return cmd.sendChat(
+            player,
+            localization.getString("vehicle.spawnBlacklisted")
+        );
+
     try {
         const vehicle = new alt.Vehicle(
             args[0],
