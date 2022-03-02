@@ -65,6 +65,16 @@ alt.on("keyup", (key) => {
 
         vehFlashLight = false;
     }
+
+    // Key: Enter
+    if (key === 13 && alt.gameControlsEnabled() && vehicle) {
+        native.setVehicleEngineOn(
+            vehicle,
+            !native.getIsVehicleEngineRunning(vehicle),
+            true,
+            true
+        );
+    }
 });
 
 alt.onServer("core:client:phone", (state) => {
