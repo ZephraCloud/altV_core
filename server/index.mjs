@@ -81,6 +81,7 @@ alt.onClient("core:server:weather:setClientTime", (player) => {
         second: new Date().getSeconds()
     });
 });
+
 cmd.register("revive", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
