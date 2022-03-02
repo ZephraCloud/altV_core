@@ -256,6 +256,12 @@ cmd.register("dv", (player, args) => {
     }
 
     if (player.vehicle) player.vehicle.destroy();
+    else if (args[0] === "all") {
+        alt.Vehicle.all.forEach((vehicle) => {
+            if (!vehicle || !vehicle.valid) return;
+            else vehicle.destroy();
+        });
+    }
 });
 
 cmd.register("repair", (player, args) => {
