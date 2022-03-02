@@ -23,6 +23,22 @@
 }
 ```
 
+## Menu example
+```js
+createMenu("Would you like to continue?", [
+    {
+        label: "Yes {fa-solid fa-check}",
+        type: "button",
+        action: "close"
+    },
+    {
+        label: "No {fa-solid fa-xmark}",
+        type: "button",
+        action: "close"
+    }
+]);
+```
+
 ## Credits
 * [Stuyk](https://github.com/Stuyk) for the great documentation
 * [Colin Mitchell](https://muffinlabs.com) for the name generator
