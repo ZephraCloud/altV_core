@@ -492,23 +492,45 @@ alt.everyTick(() => {
 
     if (nearIsland) {
         native.setRadarAsExteriorThisFrame();
-        native.setRadarAsInteriorThisFrame(alt.hash("h4_fake_islandx"), 4700.0, -5145.0, 0, 0);
+        native.setRadarAsInteriorThisFrame(
+            alt.hash("h4_fake_islandx"),
+            4700.0,
+            -5145.0,
+            0,
+            0
+        );
 
         if (distance >= 3000) {
             nearIsland = false;
-            native.setIslandHopperEnabled('HeistIsland', false);
+            native.setIslandHopperEnabled("HeistIsland", false);
             native.setScenarioGroupEnabled("Heist_Island_Peds", false);
             native.setAudioFlag("PlayerOnDLCHeist4Island", false);
-            native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
-            native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
+            native.setAmbientZoneListStatePersistent(
+                "AZL_DLC_Hei4_Island_Zones",
+                false,
+                false
+            );
+            native.setAmbientZoneListStatePersistent(
+                "AZL_DLC_Hei4_Island_Disabled_Zones",
+                false,
+                false
+            );
         }
     } else if (distance < 2000 && !nearIsland) {
         nearIsland = true;
-        native.setIslandHopperEnabled('HeistIsland', true);
-        native.setScenarioGroupEnabled('Heist_Island_Peds', true);
+        native.setIslandHopperEnabled("HeistIsland", true);
+        native.setScenarioGroupEnabled("Heist_Island_Peds", true);
         native.setAudioFlag("PlayerOnDLCHeist4Island", true);
-        native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
-        native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
+        native.setAmbientZoneListStatePersistent(
+            "AZL_DLC_Hei4_Island_Zones",
+            true,
+            true
+        );
+        native.setAmbientZoneListStatePersistent(
+            "AZL_DLC_Hei4_Island_Disabled_Zones",
+            false,
+            true
+        );
     }
 });
 
