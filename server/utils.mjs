@@ -19,3 +19,7 @@ export function generateLicensePlateText() {
 export function getPlayerByName(name) {
     return alt.Player.all.filter((p) => p.name === name)[0];
 }
+
+export function getPlayerBySocialId(socialId) {
+    return alt.Player.all.filter((p) => p.socialID === socialId)[0];
+}
