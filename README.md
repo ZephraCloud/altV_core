@@ -15,6 +15,10 @@
             "zephra_core"
         ]
     },
+    "vehicleSpawnBlacklist": [
+        "oppressor",
+        "oppressor2"
+    ],
     "language": "en_US"
 }
 ```
