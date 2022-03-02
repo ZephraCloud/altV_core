@@ -309,6 +309,17 @@ cmd.register("repair", (player, args) => {
     if (player.vehicle) player.vehicle.repair();
 });
 
+cmd.register("bridge", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    alt.emitAllClients("core:client:bridge", args?.[0] ?? "up");
+});
+
 cmd.register("playerlist", (player) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(

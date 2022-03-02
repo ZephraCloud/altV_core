@@ -27,6 +27,128 @@ alt.onServer("core:client:login", () => {
 alt.onServer("core:client:weather:setTime", (date) => {
     native.setClockTime(date.hour, date.minute, date.second);
 });
+
+alt.onServer("core:client:bridge", (toState) => {
+    const bridge = native.getClosestObjectOfType(
+            353.3317,
+            -2315.838,
+            13.72306,
+            50.0,
+            alt.hash("po1_09_brig_m"),
+            false,
+            true,
+            true
+        ),
+        bridgeLOD = native.getClosestObjectOfType(
+            353.3297,
+            -2316.402,
+            13.59048,
+            50.0,
+            alt.hash("po1_09_brig_m_lod"),
+            false,
+            true,
+            true
+        ),
+        bridgeRoadDecor = native.getClosestObjectOfType(
+            351.0259,
+            -2318.766,
+            9.23275,
+            50.0,
+            alt.hash("po1_09_brig_m_glue"),
+            false,
+            true,
+            true
+        ),
+        bridgeFences = [
+            native.getClosestObjectOfType(
+                353.294,
+                -2299.624,
+                9.797024,
+                1.0,
+                alt.hash("po1_09_brig_det_05"),
+                false,
+                true,
+                true
+            ),
+            native.getClosestObjectOfType(
+                353.3542,
+                -2316.406,
+                9.903923,
+                1.0,
+                alt.hash("po1_09_brig_det_03"),
+                false,
+                true,
+                true
+            ),
+            native.getClosestObjectOfType(
+                353.3321,
+                -2332.591,
+                9.788223,
+                1.0,
+                alt.hash("po1_09_brig_det_04"),
+                false,
+                true,
+                true
+            )
+        ],
+        bridgeToCoords =
+            toState === "up"
+                ? [353.3317, -2315.838, 48.0]
+                : [353.3317, -2315.838, 13.72306];
+
+    if (toState === "up") native.deleteObject(bridgeRoadDecor);
+    else {
+        native.createObject(
+            alt.hash("po1_09_brig_m_glue"),
+            351.0259,
+            -2318.766,
+            9.23275,
+            false,
+            false,
+            false
+        );
+    }
+
+    setInterval(() => {
+        const state = native.slideObject(
+            bridge,
+            bridgeToCoords[0],
+            bridgeToCoords[1],
+            bridgeToCoords[2],
+            0.0,
+            0.0,
+            20.0,
+            true
+        );
+
+        native.slideObject(
+            bridgeLOD,
+            bridgeToCoords[0],
+            bridgeToCoords[1],
+            bridgeToCoords[2],
+            0.0,
+            0.0,
+            20.0,
+            true
+        );
+
+        bridgeFences.forEach((fence) => {
+            native.slideObject(
+                fence,
+                bridgeToCoords[0],
+                bridgeToCoords[1],
+                bridgeToCoords[2],
+                0.0,
+                0.0,
+                20.0,
+                true
+            );
+        });
+
+        if (state) clearInterval(this), console.log("FINISHED");
+    }, 1);
+});
+
 let vehFlashLight = false;
 
 alt.on("keydown", (key) => {
