@@ -68,15 +68,17 @@ alt.onServer("core:client:phone", (state) => {
     else closePhone();
 });
 
-// alt.on("connectionComplete", () => {
-//     webview.login = new alt.WebView(
-//         "http://resource/client/html/login/index.html"
-//     );
+alt.on("connectionComplete", () => {
+    // webview.login = new alt.WebView(
+    //     "http://resource/client/html/login/index.html"
+    // );
 
-//     webview.login.on("core:client:webview:login", (email, password) => {
-//         alt.emitServer("core:server:checkLogin", email, password);
-//     });
-// });
+    // webview.login.on("core:client:webview:login", (email, password) => {
+    //     alt.emitServer("core:server:checkLogin", email, password);
+    // });
+    const blip = new alt.PointBlip(5943.5679611650485, -6272.114833599767, 2);
+    blip.alpha = 0;
+});
 
 alt.onServer("core:client:loginStatus", (status) => {
     if (status) {
@@ -449,6 +451,10 @@ function overrideVehicleEntrance() {
     }
 }
 
+const islandCenter = new alt.Vector3(4840.571, -5174.425, 2.0);
+
+let nearIsland = false;
+
 alt.everyTick(() => {
     if (phoneState) {
         native.disableControlAction(0, 24, true); // Attack
@@ -466,6 +472,29 @@ alt.everyTick(() => {
         native.enableControlAction(0, 25, true); // Aim
         native.enableControlAction(0, 45, true); // Reload
         native.enableControlAction(0, 144, true); // Parachute deploy
+    }
+
+    const distance = alt.Player.local.pos.distanceTo(islandCenter);
+
+    if (nearIsland) {
+        native.setRadarAsExteriorThisFrame();
+        native.setRadarAsInteriorThisFrame(alt.hash("h4_fake_islandx"), 4700.0, -5145.0, 0, 0);
+
+        if (distance >= 3000) {
+            nearIsland = false;
+            native.setIslandHopperEnabled('HeistIsland', false);
+            native.setScenarioGroupEnabled("Heist_Island_Peds", false);
+            native.setAudioFlag("PlayerOnDLCHeist4Island", false);
+            native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", false, false);
+            native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, false);
+        }
+    } else if (distance < 2000 && !nearIsland) {
+        nearIsland = true;
+        native.setIslandHopperEnabled('HeistIsland', true);
+        native.setScenarioGroupEnabled('Heist_Island_Peds', true);
+        native.setAudioFlag("PlayerOnDLCHeist4Island", true);
+        native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", true, true);
+        native.setAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", false, true);
     }
 });
 
