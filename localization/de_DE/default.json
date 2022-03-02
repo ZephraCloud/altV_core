@@ -6,5 +6,8 @@
     "player.missingPermission": "Du hast nicht genug Rechte, um diesen Befehl zu verwenden!",
     "player.kick": "Du wurdest vom Server gekickt!",
     "player.ban": "Du wurdest vom Server gebannt!",
-    "blip.store.clothing.suburban": "Suburban Store"
+    "player.teleportTo": "Zum Spieler teleportieren",
+    "player.teleportToMe": "Spieler zu mir teleportieren",
+    "blip.store.clothing.suburban": "Suburban Store",
+    "vehicle.spawnBlacklisted": "Fahrzeug ist auf der Blacklist."
 }
