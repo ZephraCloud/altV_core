@@ -3,6 +3,7 @@ import * as native from "natives";
 
 import * as character from "./character.js";
 import * as fuel from "./fuel.js";
+import * as menu from "./menu.js";
 
 const ignoredHats = [1, 27, 32, 33];
 
