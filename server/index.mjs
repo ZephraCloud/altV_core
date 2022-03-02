@@ -74,6 +74,13 @@ alt.onClient("core:server:checkLogin", async (player, email, password) => {
     });
 });
 
+alt.onClient("core:server:weather:setClientTime", (player) => {
+    alt.emitClient(player, "core:client:weather:setTime", {
+        hour: new Date().getHours(),
+        minute: new Date().getMinutes(),
+        second: new Date().getSeconds()
+    });
+});
 cmd.register("revive", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(

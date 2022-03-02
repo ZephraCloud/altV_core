@@ -23,6 +23,9 @@ alt.onServer("core:client:login", () => {
     });
 });
 
+alt.onServer("core:client:weather:setTime", (date) => {
+    native.setClockTime(date.hour, date.minute, date.second);
+});
 let vehFlashLight = false;
 
 alt.on("keydown", (key) => {
@@ -499,3 +502,6 @@ alt.everyTick(() => {
 });
 
 alt.setWeatherSyncActive(true);
+alt.setMsPerGameMinute(60000);
+
+alt.emitServer("core:server:weather:setClientTime");
