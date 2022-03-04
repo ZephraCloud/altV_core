@@ -111,7 +111,8 @@ const stores = [
             sprite: 73,
             scale: 0.75
         }
-    };
+    },
+    colshapes = {};
 
 stores.forEach((store, i) => {
     blips.create(
@@ -124,4 +125,55 @@ stores.forEach((store, i) => {
         true,
         "zephra_core"
     );
+
+    if (store.markers) {
+        for (const [k, v] of Object.entries(store.markers)) {
+            const colshape = new alt.ColshapeCircle(v.x, v.y, 1);
+
+            colshape.id = `store_clothing_${i}_${k}`;
+            colshape.playersOnly = true;
+
+            colshapes[colshape.id] = colshape;
+        }
+    }
+});
+
+alt.on("entityEnterColshape", (colshape, player) => {
+    if (colshapes[colshape.id].id !== colshape.id) return;
+
+    if (colshape.id.includes("checkout"))
+        return alt.emitClient(player, "core:client:store:clothing:checkout");
+
+    alt.emitClient(
+        player,
+        "core:client:store:clothing:loadMenu",
+        colshape.id.split("_")[3]
+    );
+});
+
+alt.onClient("core:server:store:clothing:checkout", (player, data) => {
+    alt.emit(
+        "sql:altv:query",
+        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            const character = result[0];
+
+            character.skin = JSON.parse(character.skin);
+
+            character.skin.clothes = data.clothes;
+
+            alt.emit(
+                "sql:altv:query",
+                `UPDATE characters SET skin = '${JSON.stringify(
+                    character.skin
+                )}' WHERE userId = ${player.getSyncedMeta("userId")}`
+            );
+        }
+    );
+});
+
+alt.on("resourceStop", () => {
+    for (const colshape in colshapes) colshapes[colshape].destroy();
 });
