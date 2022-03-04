@@ -7,37 +7,37 @@ import * as blips from "./blips.mjs";
 const stores = [
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "discount",
             position: new alt.Vector3(72.3, -1399.1, 28.4)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "ponsonbys",
             position: new alt.Vector3(-703.8, -152.3, 36.4)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "ponsonbys",
             position: new alt.Vector3(-167.9, -299.0, 38.7)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "binco",
             position: new alt.Vector3(428.7, -800.1, 28.5)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "binco",
             position: new alt.Vector3(-829.4, -1073.7, 10.3)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "ponsonbys",
             position: new alt.Vector3(-1447.8, -242.5, 48.8)
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "discount",
             position: new alt.Vector3(11.6, 6514.2, 30.9)
         },
         {
@@ -47,7 +47,7 @@ const stores = [
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "discount",
             position: new alt.Vector3(1696.3, 4829.3, 41.1)
         },
         {
@@ -57,8 +57,8 @@ const stores = [
         },
         {
             name: "Clothing Store",
-            type: "suburban",
-            position: new alt.Vector3(1190.6, 2713.4, 37.2)
+            type: "discount",
+            position: new alt.Vector3(1190.6, 2713.4, 37.2),
         },
         {
             name: "Clothing Store",
@@ -72,13 +72,28 @@ const stores = [
         },
         {
             name: "Clothing Store",
-            type: "suburban",
+            type: "discount",
             position: new alt.Vector3(-1108.4, 2708.9, 18.1)
         }
     ],
     blipInfo = {
         suburban: {
             color: 43,
+            sprite: 73,
+            scale: 0.75
+        },
+        ponsonbys: {
+            color: 4,
+            sprite: 73,
+            scale: 0.75
+        },
+        discount: {
+            color: 26,
+            sprite: 73,
+            scale: 0.75
+        },
+        binco: {
+            color: 47,
             sprite: 73,
             scale: 0.75
         }
