@@ -28,8 +28,9 @@ export function createMenu(data) {
         closeMenu(menuId);
     });
 
-    menu.webview.on("webview:emitServer", (e, args) => {
-        alt.emitServer(e, args);
+    menu.webview.on("webview:emit", (e, args, client) => {
+        if (client) alt.emit(e, args);
+        else alt.emitServer(e, args);
     });
 
     return menuId;
@@ -52,3 +53,4 @@ function generateMenuId() {
 }
 
 alt.onServer("core:client:menu:create", createMenu);
+alt.on("core:client:menu:create", createMenu);
