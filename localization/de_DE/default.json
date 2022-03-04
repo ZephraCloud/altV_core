@@ -8,6 +8,11 @@
     "player.ban": "Du wurdest vom Server gebannt!",
     "player.teleportTo": "Zum Spieler teleportieren",
     "player.teleportToMe": "Spieler zu mir teleportieren",
+    "player.sex.male": "Männlich",
+    "player.sex.female": "Weiblich",
     "blip.store.clothing.suburban": "Suburban Store",
+    "blip.store.clothing.ponsonbys": "Ponsonbys Store",
+    "blip.store.clothing.binco": "binco Store",
+    "blip.store.clothing.discount": "Discount Store",
     "vehicle.spawnBlacklisted": "Fahrzeug ist auf der Blacklist."
 }
