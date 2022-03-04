@@ -43,7 +43,14 @@ const stores = [
         {
             name: "Clothing Store",
             type: "suburban",
-            position: new alt.Vector3(123.6, -219.4, 53.6)
+            position: new alt.Vector3(123.6, -219.4, 53.6),
+            markers: {
+                pants: new alt.Vector3(123.204, -229.45, 53.554),
+                shoes: new alt.Vector3(119.419, -222.382, 53.554),
+                tops: new alt.Vector3(126.184, -220.008, 53.554),
+                shirts: new alt.Vector3(120.501, -216.395, 53.554),
+                checkout: new alt.Vector3(123.34, -223.595, 53.554)
+            }
         },
         {
             name: "Clothing Store",
@@ -59,6 +66,13 @@ const stores = [
             name: "Clothing Store",
             type: "discount",
             position: new alt.Vector3(1190.6, 2713.4, 37.2),
+            markers: {
+                pants: new alt.Vector3(1190.624, 2715.402, 37.227),
+                shoes: new alt.Vector3(1193.103, 2704.443, 37.21),
+                tops: new alt.Vector3(1190.769, 2707.635, 37.227),
+                shirts: new alt.Vector3(1189.621, 2710.101, 31.21),
+                checkout: new alt.Vector3(1199.907, 2707.767, 37.21)
+            }
         },
         {
             name: "Clothing Store",
