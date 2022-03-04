@@ -3,7 +3,7 @@ import * as alt from "alt-server";
 import * as log from "./log.mjs";
 import fetch from "node-fetch";
 
-export function setup(player, userId) {
+export function setup(player, userId, sex) {
     if (!player || !userId)
         return log.error("Player or userId is undefined", "CORE,CHARACTER");
 
@@ -76,18 +76,6 @@ export function setup(player, userId) {
 
                             player.spawn(position.x, position.y, position.z);
                         }
-
-                        // if (character.clothes) {
-                        //     const clothes = JSON.parse(character.clothes);
-
-                        //     for (let i = 0; i <= 11; i++) {
-                        //         player.setClothes(
-                        //             clothes[i].component,
-                        //             clothes[i].drawable,
-                        //             clothes[i].texture
-                        //         );
-                        //     }
-                        // }
 
                         const healthData = JSON.parse(character.health);
 
