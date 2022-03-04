@@ -116,7 +116,7 @@ const stores = [
 stores.forEach((store, i) => {
     blips.create(
         `store_clothing_${i}`,
-        localization.get(`blip.store.clothing.${store.type}`),
+        localization.getString(`blip.store.clothing.${store.type}`),
         store.position,
         blipInfo[store.type].sprite,
         blipInfo[store.type].color,
