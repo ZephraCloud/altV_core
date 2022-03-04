@@ -4,6 +4,8 @@ import * as native from "natives";
 import * as character from "./character.js";
 import * as fuel from "./fuel.js";
 import * as menu from "./menu.js";
+import * as blips from "./blips.js";
+import * as storeClothing from "./store_clothing.js";
 
 const ignoredHats = [1, 27, 32, 33];
 
