@@ -68,9 +68,10 @@ window.onload = () => {
                 if (item.onClick) {
                     menuItem.addEventListener("click", () => {
                         alt.emit(
-                            "webview:emitServer",
+                            "webview:emit",
                             item.onClick,
-                            item.clickData
+                            item.clickData,
+                            item.onClickClient ?? false
                         );
                     });
                 }
@@ -82,7 +83,7 @@ window.onload = () => {
         function convertText(text) {
             if (!text) return "";
 
-            return text.replace(/\{[a-zA-Z0-9- ]*\}/g, (match) => {
+            return text.toString().replace(/\{[a-zA-Z0-9- ]*\}/g, (match) => {
                 return `<i class="${match.replace(/\{|\}/g, "")}"></i>`;
             });
         }
