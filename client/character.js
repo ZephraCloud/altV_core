@@ -13,7 +13,10 @@ alt.on("connectionComplete", () => {
     alt.loadModel(model.male);
 });
 
-alt.onServer("chore:client:character:load", (character) => {
+alt.onServer("core:client:character:load", loadCharacter);
+alt.onServer("core:client:character:create", (userId) => {});
+
+function loadCharacter(character) {
     if (!character)
         return log.error("Character data not provided", "CORE,CHARACTER");
 
@@ -38,6 +41,21 @@ alt.onServer("chore:client:character:load", (character) => {
         0,
         false
     );
+
+    /* Clothes */
+    if (skin.clothes) {
+        for (const key in skin.clothes) {
+            const item = skin.clothes[key];
+
+            native.setPedComponentVariation(
+                scriptID,
+                item.component,
+                item.drawable,
+                item.texture,
+                2
+            );
+        }
+    }
 
     /* Hair */
     native.addPedDecorationFromHashes(
@@ -85,9 +103,7 @@ alt.onServer("chore:client:character:load", (character) => {
 
     /* Eyes */
     native.setPedEyeColor(scriptID, skin.eyes);
-});
-
-alt.onServer("chore:client:character:create", (userId) => {});
+}
 
 const HairOverlays = {
     male: {
