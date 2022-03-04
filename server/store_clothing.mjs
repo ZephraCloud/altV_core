@@ -121,7 +121,7 @@ stores.forEach((store, i) => {
         blipInfo[store.type].sprite,
         blipInfo[store.type].color,
         blipInfo[store.type].scale,
-        false,
+        true,
         "zephra_core"
     );
 });
