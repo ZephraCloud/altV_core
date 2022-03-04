@@ -6,6 +6,7 @@ import * as log from "./log.mjs";
 import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
+import * as storeClothing from "./store_clothing.mjs";
 import * as character from "./character.mjs";
 import * as localization from "./localization.mjs";
 import * as utils from "./utils.mjs";
