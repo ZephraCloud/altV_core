@@ -86,22 +86,52 @@ export function setup(player, userId, sex) {
                     }
                 );
             } else {
-                const healthData = JSON.stringify({
-                    health: 100,
-                    bloodType: generateBloodType()
-                });
+                if (sex) {
+                    const healthData = JSON.stringify({
+                        health: 100,
+                        bloodType: generateBloodType()
+                    });
 
-                alt.emit(
-                    "sql:altv:query",
-                    `INSERT INTO characters (userId, name, sex, dob, health, skin) VALUES (${userId}, '${await generateNames(
-                        "male"
-                    )}', "male", '${generateDOB()}', '${healthData}','${generateSkin(
-                        "male"
-                    )}')`,
-                    () => {
-                        setup(player, userId);
-                    }
-                );
+                    alt.emit(
+                        "sql:altv:query",
+                        `INSERT INTO characters (userId, name, sex, dob, health, skin) VALUES (${userId}, '${await generateNames(
+                            "male"
+                        )}', "male", '${generateDOB()}', '${healthData}','${generateSkin(
+                            "male"
+                        )}')`,
+                        () => {
+                            setup(player, userId);
+                        }
+                    );
+                } else {
+                    alt.emitClient(player, "core:client:menu:create", {
+                        title: "Character sex",
+                        items: [
+                            {
+                                label: localization.getString(
+                                    "player.sex.male"
+                                ),
+                                type: "button",
+                                clickData: {
+                                    sex: "male",
+                                    userId: userId
+                                },
+                                onClick: "core:server:character:create:sex"
+                            },
+                            {
+                                label: localization.getString(
+                                    "player.sex.female"
+                                ),
+                                type: "button",
+                                clickData: {
+                                    sex: "female",
+                                    userId: userId
+                                },
+                                onClick: "core:server:character:create:sex"
+                            }
+                        ]
+                    });
+                }
             }
         }
     );
@@ -370,3 +400,37 @@ function convertSkin(player, skin) {
 
     return skin;
 }
+
+alt.onClient("core:server:character:create:sex", (player, data) => {
+    setup(player, data.userId, data.sex);
+});
+
+alt.onClient("core:server:character:loadSkin", (player) => {
+    alt.emit(
+        "sql:altv:query",
+        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            if (!result?.[0])
+                return log.error("Character not found", "CORE,CHARACTER");
+
+            alt.emitClient(player, "core:client:character:load", result[0]);
+        }
+    );
+});
+
+alt.onClient("core:server:character:saveSkin", (player) => {
+    alt.emit(
+        "sql:altv:query",
+        `SELECT * FROM characters WHERE userId = ${player.getSyncedMeta(
+            "userId"
+        )}`,
+        (result) => {
+            if (!result?.[0])
+                return log.error("Character not found", "CORE,CHARACTER");
+
+            alt.emitClient(player, "core:client:character:load", result[0]);
+        }
+    );
+});
