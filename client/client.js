@@ -19,8 +19,20 @@ alt.onServer("core:client:login", () => {
     alt.toggleGameControls(false);
     webview.login.focus();
 
-    webview.login.on("core:client:webview:login", (email, password) => {
+    webview.login.on("webview:login", (email, password) => {
         alt.emitServer("core:server:checkLogin", email, password);
+    });
+
+    webview.login.on("webview:localStorage:getItems", () => {
+        webview.login.emit(
+            "webview:localStorage:return",
+            alt.LocalStorage.get("core:login:email")
+        );
+    });
+
+    webview.login.on("webview:localStorage:set", (key, value) => {
+        alt.LocalStorage.set(key, value);
+        alt.LocalStorage.save();
     });
 });
 
@@ -230,7 +242,7 @@ alt.onServer("core:client:loginStatus", (status) => {
     } else {
         console.log("Login failed.");
 
-        webview.login.emit("core:client:webview:loginFailed");
+        webview.login.emit("webview:loginFailed");
     }
 });
 
@@ -511,7 +523,7 @@ function openPhone() {
     //alt.toggleGameControls(false);
     webview.phone.focus();
 
-    webview.phone.on("core:client:webview:login", (email, password) => {
+    webview.phone.on("webview:login", (email, password) => {
         alt.emitServer("core:server:checkLogin", email, password);
     });
 }

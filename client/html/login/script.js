@@ -18,14 +18,17 @@ window.onload = () => {
     });
 
     if ("alt" in window) {
-        alt.on("core:client:webview:loginFailed", () => {
+        alt.on("webview:loginFailed", () => {
             document.getElementById("note").textContent =
                 "Login fehlgeschlagen.";
         });
 
-        if (localStorage.getItem("core:login:email"))
-            document.querySelector("input[name=email]").value =
-                localStorage.getItem("core:login:email");
+        alt.on("webview:localStorage:return", (value) => {
+            document.querySelector("input[name=email]").value = value;
+        });
+
+        alt.emit("webview:localStorage:getItems");
+
         if (
             localStorage.getItem("core:login:password") &&
             parseInt(localStorage.getItem("core:login:lastLogin") ?? "0") >=
@@ -41,12 +44,12 @@ window.onload = () => {
                 email = form.querySelector("input[name=email]").value,
                 password = form.querySelector("input[name=password]").value;
 
-            localStorage.setItem("core:login:email", email);
+            alt.emit("webview:localStorage:set", "email", email);
             localStorage.setItem("core:login:password", password);
             localStorage.setItem("core:login:lastLogin", Date.now());
 
             document.getElementById("note").textContent = "In Bearbeitung...";
-            alt.emit("core:client:webview:login", email, password);
+            alt.emit("webview:login", email, password);
         });
     } else {
         document.getElementById("note").textContent =
