@@ -18,11 +18,27 @@ alt.onServer("core:client:blips:create", (blip) => {
 
     blips[blip.id] = blipObject;
 
+    alt.LocalStorage.set("blips", JSON.stringify(blips));
+    alt.LocalStorage.save();
+
     log.log(`Registered blip: ${blip.id}`);
 });
 
 alt.onServer("core:client:blips:remove", (blip) => {
-    if (!blips[blip.id]) return log.error(`Blip ${blip.id} doesn't exist`);
+    if (!blips[blip.id] && !alt.LocalStorage.get("core:client:blips"))
+        return log.error(`Blip ${blip.id} doesn't exist`);
+    else if (!blips[blip.id]) {
+        const blips = JSON.parse(alt.LocalStorage.get("core:client:blips"));
+
+        delete blips[blip.id];
+
+        log.log(`Unregistered blip: ${blip.id}`);
+
+        alt.LocalStorage.set("core:client:blips", JSON.stringify(blips));
+        alt.LocalStorage.save();
+
+        return;
+    }
 
     blips[blip.id].destroy();
 
