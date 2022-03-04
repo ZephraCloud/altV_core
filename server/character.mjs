@@ -55,7 +55,7 @@ export function setup(player, userId) {
 
                         alt.emitClient(
                             player,
-                            "chore:client:character:load",
+                            "core:client:character:load",
                             character
                         );
 
