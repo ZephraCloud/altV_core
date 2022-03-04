@@ -364,9 +364,9 @@ function convertSkin(player, skin) {
 
     skin = JSON.parse(skin);
 
-    if (!skin.clothes) skin.clothes = {};
+    // if (!skin.clothes) skin.clothes = {};
 
-    for (let i = 0; i <= 11; i++) skin.clothes[i] = player.getClothes(i);
+    // for (let i = 0; i <= 11; i++) skin.clothes[i] = player.getClothes(i);
 
     return skin;
 }
