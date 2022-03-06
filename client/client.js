@@ -163,7 +163,7 @@ alt.onServer("core:client:bridge", (toState) => {
     }, 1);
 });
 
-let vehFlashLight = false;
+let vehFlashLight = {};
 
 alt.on("keydown", (key) => {
     const vehicle = alt.Player.local.vehicle;
@@ -178,8 +178,12 @@ alt.on("keydown", (key) => {
             isHighBeamOn = currentLight[2] === "1";
 
         if (!isHighBeamOn) native.setVehicleLights(vehicle, 2);
+        if (isLightOn) native.setVehicleFullbeam(vehicle, true);
 
-        vehFlashLight = currentLight;
+        vehFlashLight = {
+            currentLight,
+            isLightOn
+        };
     }
 });
 
@@ -196,10 +200,24 @@ alt.on("keyup", (key) => {
     }
 
     // Key: L
-    if (key === 76 && alt.gameControlsEnabled() && vehicle && vehFlashLight) {
-        native.setVehicleLights(vehicle, Number(vehFlashLight[1]));
+    if (
+        key === 76 &&
+        alt.gameControlsEnabled() &&
+        vehicle &&
+        vehFlashLight.currentLight
+    ) {
+        native.setVehicleLights(
+            vehicle,
+            vehFlashLight.currentLight[1] === "0"
+                ? vehFlashLight.isLightOn
+                    ? 1
+                    : 0
+                : vehFlashLight.currentLight[1]
+        );
 
-        vehFlashLight = false;
+        if (vehFlashLight.isLightOn) native.setVehicleFullbeam(vehicle, false);
+
+        vehFlashLight = {};
     }
 
     // Key: Enter
