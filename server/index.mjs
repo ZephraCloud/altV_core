@@ -311,6 +311,17 @@ cmd.register("repair", (player, args) => {
     if (player.vehicle) player.vehicle.repair();
 });
 
+cmd.register("wash", (player, args) => {
+    if (!player.getSyncedMeta("admin")) {
+        return cmd.sendChat(
+            player,
+            localization.getString("player.missingPermission")
+        );
+    }
+
+    if (player.vehicle) player.vehicle.dirtLevel = 0;
+});
+
 cmd.register("bridge", (player, args) => {
     if (!player.getSyncedMeta("admin")) {
         return cmd.sendChat(
