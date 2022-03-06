@@ -7,6 +7,7 @@ import * as cmd from "./commands.mjs";
 import * as sql from "./sql.mjs";
 import * as autoStart from "./autostart.mjs";
 import * as storeClothing from "./store_clothing.mjs";
+import * as ambulance from "./ambulance.mjs";
 import * as character from "./character.mjs";
 import * as localization from "./localization.mjs";
 import * as utils from "./utils.mjs";
@@ -366,14 +367,6 @@ cmd.register("playerlist", (player) => {
 // cmd.register("poweron", player => {
 //     alt.emitAllClients("blackoutoff");
 // });
-
-alt.on("playerDeath", (player, killer, weaponHash) => {
-    log.log(
-        `${player.name} died. Respawning at ${player.pos.x}, ${player.pos.y}, ${player.pos.z}`
-    );
-
-    player.spawn(player.pos.x, player.pos.y, player.pos.z, 0);
-});
 
 alt.on("playerConnect", (player) => {
     log.log(`${player.name} connected`);
