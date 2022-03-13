@@ -10,9 +10,6 @@
     "player.teleportToMe": "Teleport player to me",
     "player.sex.male": "Male",
     "player.sex.female": "Female",
-    "blip.store.clothing.suburban": "Suburban Store",
-    "blip.store.clothing.ponsonbys": "Ponsonbys Store",
-    "blip.store.clothing.binco": "binco Store",
-    "blip.store.clothing.discount": "Discount Store",
+    "blip.store.clothing": "{0} Store",
     "vehicle.spawnBlacklisted": "Vehicle is blacklisted."
 }
