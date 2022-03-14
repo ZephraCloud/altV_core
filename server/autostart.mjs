@@ -15,7 +15,7 @@ export function startAll(ignore = config.autostart.exclude) {
 
         files.forEach((file) => {
             if (
-                !ignore[file] &&
+                file !== "zephra_core" && !ignore[file] &&
                 fs.statSync(path.join(resourcePath, file)).isDirectory()
             )
                 alt.startResource(file);
