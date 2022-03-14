@@ -11,9 +11,7 @@
         "database": "YOUR_SQL_DATABASE"
     },
     "autostart": {
-        "exclude": [
-            "zephra_core"
-        ]
+        "exclude": []
     },
     "vehicleSpawnBlacklist": [
         "oppressor",
